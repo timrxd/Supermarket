@@ -60,6 +60,9 @@ public class Register {
 		
 		// Add tax
 		total *= (1+(SALES_TAX/100));
+		
+		// Round to nearest penny
+		total = Math.round(total*100.0) / 100.0;
 	
 		return total;
 	}
