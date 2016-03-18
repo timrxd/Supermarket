@@ -41,8 +41,6 @@ public class RegisterTest {
 		assertTrue(reg.checkout("A12t-4Gh7-qPL9-3n4M") == 3.76);
 		assertTrue(reg.checkout("A12t-4Gh7-qPL9-3n4m;E5T6-9uI3-TH15-Qr88;"
 				+ "yRT6-72as-K736-L4aR;tq4C-Vv6T-75Zx-1RMr;65P1-UdgM-XH2m-LqW2") == 28.21);		
-
-		assertTrue(1 == 2);
 		
 	}
 	
