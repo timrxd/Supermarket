@@ -1,1 +1,4 @@
 language: java
+script:
+ - javac src/testing/RegisterTest.java
+ - java src/testing/RegisterTest
