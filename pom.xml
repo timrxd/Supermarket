@@ -12,6 +12,7 @@
     <dependency>
       <groupId>cashier_exercise</groupId>
       <artifactId>cashier_exercise</artifactId>
+      <version>1.0</version>
     </dependency>
   </dependencies>
 </project>
