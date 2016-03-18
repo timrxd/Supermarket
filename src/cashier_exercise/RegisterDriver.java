@@ -28,17 +28,15 @@ public class RegisterDriver {
 		
 		// Input
 		Scanner scan = new Scanner(System.in);
-		String codes = scan.nextLine();
+		String codes = "";//scan.nextLine();
 		
 		// Calculate sale price
 		Double sale = reg.checkout(codes);
 		System.out.printf("Total: $%.2f\n", sale);	
+
+		reg.addItem("ABCD-1234-4567-WXYZ", 100.0);
+		reg.removeItem("ABCD-1234-4567-WXYZ");
 		
-		// Test insert
-		System.out.printf("Total: $%.2f\n", reg.checkout("A12T-4GH7-QPL9-3N4M;65P1-UDGM-XH2M-LQW2;ABCD-1234-5678-LMNO"));	
-		//reg.addItem("ABCD-1234-5678-LMNO", 5.00);
-		System.out.printf("Total: $%.2f\n", reg.checkout("A12T-4GH7-QPL9-3N4M;65P1-UDGM-XH2M-LQW2;ABCD-1234-5678-LMNO"));	
-			
 		
 		scan.close();
 		

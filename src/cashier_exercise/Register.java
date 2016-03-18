@@ -2,6 +2,7 @@ package cashier_exercise;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -42,7 +43,7 @@ public class Register {
 	/**
 	 * Calculates total price of items 
 	 * @param items String of item codes delineated by ';'
-	 * @return Total price of the sale
+	 * @return Total price of sale
 	 */
 	public Double checkout(String items) {
 		
@@ -110,15 +111,57 @@ public class Register {
 		
 		// Check if duplicate item code
 		if (prices.get(code) == null) {
-			prices.put(code, price);
 			try {
 				Files.write(Paths.get("prices.txt"), 
-						("\n" + code + " " + price).getBytes(), StandardOpenOption.APPEND);				
+						("\n" + code + " " + price).getBytes(), StandardOpenOption.APPEND);	
+				prices.put(code, price);
 			} catch (IOException e) {
 				System.err.println("Error, could not add item to price list.");
 			}
 		}
 		else
 			System.out.println("Item code " + code + " already exists.");
+	}
+	
+	/**
+	 * Removes the item from the price list
+	 * @param code Item code
+	 */
+	public void removeItem(String code) {
+		
+		if (prices.get(code) == null) {
+			System.out.println("Item doesn't exist.");
+		}
+		else {
+			// Read in codes and prices from price file
+			Scanner read;
+			try {
+				read = new Scanner(new File("prices.txt"));
+				
+				String line = "";
+				String file = "";
+				
+				// Loop through each line and exclude product 
+				while (read.hasNext()) {
+					line = read.nextLine();
+					if (!line.toUpperCase().contains(code.toUpperCase()))
+						file += line + "\n";
+				}
+				file = file.substring(0,file.length()-1);
+				read.close();
+				
+				// Rewrite products to prices.txt
+				FileWriter print = new FileWriter("prices.txt");
+				print.write(file);
+				print.close();
+				
+				prices.remove(code);
+				
+				
+			} catch (IOException e) {
+				System.err.println("Error rewriting prices.txt");
+			}
+		}
+			
 	}
 }
