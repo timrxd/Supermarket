@@ -109,8 +109,15 @@ public class Register {
 	 */
 	public void addItem(String code, double price) {
 		
+		// Price cannot be below 0
+		if (price < 0) {
+			System.out.println("Price cannot be less than free.");
+		}		
 		// Check if duplicate item code
-		if (prices.get(code) == null) {
+		else if (prices.get(code) != null) {
+			System.out.println("Item code " + code + " already exists.");
+		}
+		else {
 			try {
 				Files.write(Paths.get("prices.txt"), 
 						("\n" + code + " " + price).getBytes(), StandardOpenOption.APPEND);	
@@ -119,8 +126,6 @@ public class Register {
 				System.err.println("Error, could not add item to price list.");
 			}
 		}
-		else
-			System.out.println("Item code " + code + " already exists.");
 	}
 	
 	/**

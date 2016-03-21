@@ -34,9 +34,10 @@ public class RegisterDriver {
 		Double sale = reg.checkout(codes);
 		System.out.printf("Total: $%.2f\n", sale);	
 
+		/*
 		reg.addItem("ABCD-1234-4567-WXYZ", 100.0);
 		reg.removeItem("ABCD-1234-4567-WXYZ");
-		
+		*/
 		
 		scan.close();
 		
