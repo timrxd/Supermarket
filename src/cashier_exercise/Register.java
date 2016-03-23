@@ -72,7 +72,7 @@ public class Register {
 
 		// For each item, add its price to total
 		for(int i = 0; i < codes.length; i++) {
-			System.out.println(productList.get("codes[i]"));
+			//System.out.println(productList.get("codes[i]"));
 			if (productList.get(codes[i]) != null)
 				total += productList.get(codes[i]).getPrice();
 		}
@@ -143,7 +143,8 @@ public class Register {
 		String list = "";
         Set<String> keys = productList.keySet();
 		for(String key: keys){
-            list += productList.get(key).getCode() + " " + productList.get(key).getPrice() + 
+            list += key + " :: " + productList.get(key).getCode() + " " +
+            		+ productList.get(key).getPrice() + 
             		" " + productList.get(key).getName() + "\n";
         }
 		list.substring(0,list.length()-1);
@@ -167,6 +168,7 @@ public class Register {
 		}
 		else {
 			try {
+				code = code.toUpperCase();
 				Files.write(Paths.get(productFile), 
 						("\n" + code + " " + price + " " + name).getBytes(), 
 						StandardOpenOption.APPEND);	
