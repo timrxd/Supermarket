@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Hashtable;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  * Cash Register Program
@@ -31,14 +32,30 @@ public class Register {
 	/**
 	 * Hashtable that links item code to item price
 	 */
-	private Hashtable<String, Double> prices;
+	private Hashtable<String, Product> productList;
 	
 	/**
-	 * Constructor a Register object
+	 * Location of the list of products
+	 * Defaults to Supermarket/prices.txt
+	 */
+	private String productFile;
+	
+	/**
+	 * Default constructor a Register object
 	 */
 	public Register() {
-		initPrices();
+		productFile = "prices.txt";
+		initProductList();
 	}	
+	
+	/**
+	 * Constructor that initializes Register to a specified file
+	 * @param f File name
+	 */
+	public Register(String f) {
+		productFile = f;
+		initProductList();
+	}
 	
 	/**
 	 * Calculates total price of items 
@@ -55,8 +72,9 @@ public class Register {
 
 		// For each item, add its price to total
 		for(int i = 0; i < codes.length; i++) {
-			if (prices.get(codes[i]) != null)
-				total += prices.get(codes[i]);
+			System.out.println(productList.get("codes[i]"));
+			if (productList.get(codes[i]) != null)
+				total += productList.get(codes[i]).getPrice();
 		}
 		
 		// Add tax
@@ -69,21 +87,36 @@ public class Register {
 	}
 	
 	/**
+	 * Change the list of products the register sells
+	 * Clears the old list and reinitializes based on new file contents
+	 *  
+	 * @param f New file name
+	 */
+	public void changeProductFile(String f) {
+		productFile = f;
+		productList.clear();
+		initProductList();
+	}
+	
+	/**
 	 * Initialize hashtable of prices with product codes
 	 */
-	public void initPrices() {
+	public void initProductList() {
 		
 		// Initialize hashtable
-		prices = new Hashtable<String, Double>();
+		productList = new Hashtable<String, Product>();
 		
 		try {
 			
 			// Read in codes and prices from price file
-			Scanner read = new Scanner(new File("prices.txt"));
+			Scanner read = new Scanner(new File(productFile));
 			
 			// For each product, add a hashtable entry to prices
 			while (read.hasNext()) {
-				prices.put(read.next(), Double.parseDouble(read.next()));
+				String code = read.next();				
+				double price = Double.parseDouble(read.next());
+				String name = read.nextLine();
+				productList.put(code , new Product(code, price, name));
 			}
 			
 			// Close scanner
@@ -94,7 +127,7 @@ public class Register {
 			// Create blank price file for next time
 			System.out.println("Price file not found, generating blank file.");
 			try {
-				new File("prices.txt").createNewFile();
+				new File(productFile).createNewFile();
 			} catch (IOException e1) {
 				System.err.println("Could not create new price file, terminating register.");
 				System.exit(0);
@@ -103,25 +136,41 @@ public class Register {
 	}
 	
 	/**
+	 * Quick dump of the products in the register
+	 * @return String containing <code price name> for each product
+	 */
+	public String getProductList() {
+		String list = "";
+        Set<String> keys = productList.keySet();
+		for(String key: keys){
+            list += productList.get(key).getCode() + " " + productList.get(key).getPrice() + 
+            		" " + productList.get(key).getName() + "\n";
+        }
+		list.substring(0,list.length()-1);
+		return list;
+	}
+	
+	/**
 	 * Add an item to the hashtable of prices and to the prices file
 	 * @param code String of characters representing product
 	 * @param price Price of item
 	 */
-	public void addItem(String code, double price) {
+	public void addItem(String code, String name, double price) {
 		
 		// Price cannot be below 0
 		if (price < 0) {
 			System.out.println("Price cannot be less than free.");
 		}		
 		// Check if duplicate item code
-		else if (prices.get(code) != null) {
+		else if (productList.get(code) != null) {
 			System.out.println("Item code " + code + " already exists.");
 		}
 		else {
 			try {
-				Files.write(Paths.get("prices.txt"), 
-						("\n" + code + " " + price).getBytes(), StandardOpenOption.APPEND);	
-				prices.put(code, price);
+				Files.write(Paths.get(productFile), 
+						("\n" + code + " " + price + " " + name).getBytes(), 
+						StandardOpenOption.APPEND);	
+				productList.put(code, new Product(code, price, name));
 			} catch (IOException e) {
 				System.err.println("Error, could not add item to price list.");
 			}
@@ -134,14 +183,14 @@ public class Register {
 	 */
 	public void removeItem(String code) {
 		
-		if (prices.get(code) == null) {
+		if (productList.get(code) == null) {
 			System.out.println("Item doesn't exist.");
 		}
 		else {
 			// Read in codes and prices from price file
 			Scanner read;
 			try {
-				read = new Scanner(new File("prices.txt"));
+				read = new Scanner(new File(productFile));
 				
 				String line = "";
 				String file = "";
@@ -156,11 +205,11 @@ public class Register {
 				read.close();
 				
 				// Rewrite products to prices.txt
-				FileWriter print = new FileWriter("prices.txt");
+				FileWriter print = new FileWriter(productFile);
 				print.write(file);
 				print.close();
 				
-				prices.remove(code);
+				productList.remove(code);
 				
 				
 			} catch (IOException e) {

@@ -1,5 +1,7 @@
 package cashier_exercise;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.Scanner;
 
 /**
@@ -35,9 +37,14 @@ public class RegisterDriver {
 		System.out.printf("Total: $%.2f\n", sale);	
 
 		/*
-		reg.addItem("ABCD-1234-4567-WXYZ", 100.0);
+		reg.addItem("ABCD-1234-4567-WXYZ", "Test", 100.0);
 		reg.removeItem("ABCD-1234-4567-WXYZ");
 		*/
+		
+		reg.addItem("asdf-12hj-34hj-jkl9", "Fruit Loops", 1.00);
+		System.out.println(reg.getProductList());
+		System.out.println(reg.checkout("asdf-12hj-34hj-jkl9"));
+		reg.removeItem("asdf-12hj-34hj-jkl9");
 		
 		scan.close();
 		

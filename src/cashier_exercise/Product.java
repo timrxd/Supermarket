@@ -31,7 +31,7 @@ public class Product {
 	 * @param c Code
 	 * @param p Price
 	 */
-	public Product(String n, String c, double p) {
+	public Product(String c, double p, String n) {
 		productName = n;
 		productCode = c;
 		// Price cannot be below 0

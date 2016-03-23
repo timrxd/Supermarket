@@ -42,6 +42,12 @@ public class RegisterTest {
 		assertTrue(reg.checkout("A12t-4Gh7-qPL9-3n4m;E5T6-9uI3-TH15-Qr88;"
 				+ "yRT6-72as-K736-L4aR;tq4C-Vv6T-75Zx-1RMr;65P1-UdgM-XH2m-LqW2") == 28.21);		
 		
+		// Handle spaces in product name
+		reg.addItem("asdf-12hj-34hj-jkl9", "Fruit Loops", 1.00);
+		System.out.println(reg.getProductList());
+		System.out.println(reg.checkout("asdf-12hj-34hj-jkl9"));
+		assertTrue(reg.checkout("asdf-12hj-34hj-jkl9") == 1.087);
+		reg.removeItem("asdf-12hj-34hj-jkl9");
 	}
 	
 	// Combined to not mess with default prices.txt file
@@ -53,7 +59,7 @@ public class RegisterTest {
 		// Doesn't exist
 		assertTrue(reg.checkout("TEST-1234-5678-WXYZ") == 0.0);
 		
-		reg.addItem("TEST-1234-5678-WXYZ", 12.34);
+		reg.addItem("TEST-1234-5678-WXYZ", "Fish", 12.34);
 		
 		// Now it does
 		assertTrue(reg.checkout("TEST-1234-5678-WXYZ") == 13.42);
