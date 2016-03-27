@@ -1,4 +1,5 @@
 language: java
 script:
+ - javac src/cashier_exercise/Register.java
  - javac src/testing/RegisterTest.java
  - java src/testing/RegisterTest
