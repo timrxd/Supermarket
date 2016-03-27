@@ -1,5 +1,1 @@
 language: java
-script:
- - javac src/main/java/Register.java
- - javac src/main/java/SQL_Test.java
- - java src/main/java/SQL_Test
