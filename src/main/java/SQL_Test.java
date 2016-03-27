@@ -1,4 +1,4 @@
-package cashier_exercise.java;
+package main.java;
 
 import java.sql.*;
 

@@ -2,8 +2,7 @@ package test.java;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
-
-import cashier_exercise.java.Register;
+import main.java.Register;
 
 /**
  * Register JUnit Tests

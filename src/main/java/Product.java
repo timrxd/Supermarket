@@ -1,4 +1,4 @@
-package cashier_exercise.java;
+package main.java;
 
 /**
  * Represents a Product object to be stored in a Register
