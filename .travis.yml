@@ -1,5 +1,5 @@
 language: java
 script:
  - javac src/main/java/Register.java
- - javac src/test/java/RegisterTest.java
- - java src/test/java/RegisterTest
+ - javac src/main/java/RegisterDriver.java
+ - java src/main/java/RegisterDriver
