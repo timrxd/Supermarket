@@ -1,8 +1,9 @@
-package testing;
+package test.java;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
-import cashier_exercise.Register;
+
+import cashier_exercise.java.Register;
 
 /**
  * Register JUnit Tests

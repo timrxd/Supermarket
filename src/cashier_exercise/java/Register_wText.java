@@ -1,4 +1,4 @@
-package cashier_exercise;
+package cashier_exercise.java;
 
 import java.io.File;
 import java.io.FileNotFoundException;
