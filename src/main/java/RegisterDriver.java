@@ -21,40 +21,74 @@ public class RegisterDriver {
 		
 		// Initialize register
 		Register reg = new Register();
-		
-		// Prompt
-		System.out.println("Welcome to The Supermarket.\n" + 
-					"Enter the item codes below, seperated by semicolons.");
-		
 		// Input
 		Scanner scan = new Scanner(System.in);
-		String codes = "65P1-UDGM-XH2M-LQW2";//scan.nextLine();
 		
-		/*
-		reg.addItem("A12T-4GH7-QPL9-3N4M", "Cereal", 3.46);
-		reg.addItem("E5T6-9UI3-TH15-QR88", "Chicken", 8.18);
-		reg.addItem("YRT6-72AS-K736-L4AR", "Pop", 1.63);
-		reg.addItem("TQ4C-VV6T-75ZX-1RMR", "Pizza", 6.78);
-		reg.addItem("65P1-UDGM-XH2M-LQW2", "Tuna", 5.89);
-		*/
+		// Prompt
+		System.out.println("Welcome to The Supermarket.\n"); 
 		
-		//System.out.println(reg.getProductList());
+		// Prompt
+		int code = 0;
+		System.out.println("Welcome to The Supermarket.\n"
+				+ "Enter the your selection from menu below:\n"  
+				+ "[1]\tEnter codes for checkout\n"
+				+ "[2]\tAdd an item\n"
+				+ "[3]\tRemove an item\n"
+				+ "[4]\tDisplay product list\n"
+				+ "[5]\tExit\n");
+		try {code = scan.nextInt();}
+		catch(java.util.InputMismatchException e) {
+			code = 0; 
+		}
 		
+		while (code != 5) {
+			switch (code){
+				case 1:
+					System.out.println("Enter product codes seperated by semicolons:");
+					String line = scan.next();
+					System.out.printf("Total: $%.2f\n\n", reg.checkout(line));	
+					break;
+				case 2:
+					System.out.println("Enter product code (xxxx-xxxx-xxxx-xxxx) of new product:");
+					String c = scan.next();
+					System.out.println("Enter name of product:");
+					String n = scan.next();
+					System.out.println("Enter price of product");
+					String p = scan.next();
+					try {reg.addItem(c, n, Double.parseDouble(p));}
+					catch (NumberFormatException e) {
+						System.out.println("Invalid price.");
+					}
+					System.out.println("");
+					break;
+				case 3:
+					System.out.println("Enter product code to be removed:");
+					reg.removeItem(scan.next());
+					System.out.println("");
+					break;
+				case 4:
+					System.out.println("Product List:\n" + reg.getProductList());
+					break;
+				default:
+					System.out.println("Invalid selection.");
+			}
+				
+			// Re-prompt
+			System.out.println("Enter the your selection from menu below:\n" + 
+					  "[1]\tEnter codes for checkout\n"
+						+ "[2]\tAdd an item\n"
+						+ "[3]\tRemove an item\n"
+						+ "[4]\tDisplay product list\n"
+						+ "[5]\tExit\n");
+			String input = scan.next();
+			try {code = Integer.parseInt(input);}
+			catch (NumberFormatException e) {
+				code = 0;
+			}	
+		}
 		
-		// Calculate sale price
-		Double sale = reg.checkout(codes);
-		System.out.printf("Total: $%.2f\n", sale);	
-
-		/*
-		reg.addItem("ABCD-1234-4567-WXYZ", "Test", 100.0);
-		reg.removeItem("ABCD-1234-4567-WXYZ");
-		*/
-		/*
-		reg.addItem("asdf-12hj-34hj-jkl9", "Fruit", 7.01);
-		System.out.println(reg.getProductList());
-		System.out.println(reg.checkout("asdf-12hj-34hj-jkl9"));
-		reg.removeItem("asdf-12hj-34hj-jkl9");
-		*/
+		System.out.println("Register closed.\n");
+		
 		scan.close();
 		
 	}

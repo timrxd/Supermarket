@@ -138,8 +138,25 @@ public class Register {
 	 */
 	public void addItem(String code, String name, double price) {
 		
-		// Price cannot be below 0
-		if (price < 0) {
+		// Check if item already exists
+		ResultSet rs;
+		boolean exists = false;
+		try {
+			rs = sql.executeQuery("SELECT PRICE FROM ITEMLIST WHERE CODE='" + code + "';");
+			if (rs.isBeforeFirst()) {
+				exists = true;
+			}
+		} catch (SQLException e) {
+			System.out.println("Error connecting to database in addItem." + e);
+		}
+		
+		if (exists) {
+			System.out.println("Item " + code + " already exists.");
+		}
+		else if (!code.matches("\\w{4}-\\w{4}-\\w{4}-\\w{4}")) {
+			System.out.println("Invalid code format. {Must be xxxx-xxxx-xxxx-xxxx)");
+		}
+		else if (price < 0) {
 			System.out.println("Price cannot be less than free.");
 		}	
 		else {
