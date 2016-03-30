@@ -5,3 +5,7 @@ Test program for a basic register class. The Register takes a set of product cod
 ###### To Run
     javac -d bin/main/java/ src/main/java/*.java  
     java -cp ./bin/main/java/:./lib/* main.java.RegisterDriver
+or just use
+
+    ./run.sh
+
